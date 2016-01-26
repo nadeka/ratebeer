@@ -8,9 +8,20 @@
 
 <p>Number of beers: <%= @brewery.beers.count %></p>
 
-<p>
+<ul>
     <% @brewery.beers.each do |beer| %>
+    <li>
         <%= link_to "#{beer.name}", beer %>
+    </li>
+    <% end %>
+</ul>
+
+<p>
+    <% if @brewery.ratings.empty? %>
+        0 ratings.
+    <% else %>
+        <%= pluralize(@brewery.ratings.count, 'rating', 'ratings') %>,
+        average <%= @brewery.avg_rating %>
     <% end %>
 </p>
 

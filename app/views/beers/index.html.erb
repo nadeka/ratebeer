@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Beers</h1>
+<h1>List of beers</h1>
+
+<p>Number of beers: <%= @beers.count%> </p>
 
 <table>
   <thead>
@@ -19,7 +21,7 @@
         <td><%= beer.style %></td>
         <td><%= link_to "#{beer.brewery.name}", beer.brewery %></td>
         <td><%= link_to 'Edit', edit_beer_path(beer) %></td>
-        <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

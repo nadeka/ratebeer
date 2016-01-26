@@ -1,19 +1,25 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @beer.name %>
+    <strong>Name:</strong>
+    <%= @beer.name %>
 </p>
 
 <p>
-  <strong>Style:</strong>
-  <%= @beer.style %>
+    <strong>Style:</strong>
+    <%= @beer.style %>
 </p>
 
 <p>
-  <strong>Brewery:</strong>
-  <%= link_to "#{@beer.brewery.name}", @beer.brewery %>
+    <strong>Brewery:</strong>
+    <%= link_to "#{@beer.brewery.name}", @beer.brewery %>
 </p>
+
+<% if not @beer.ratings.empty? %>
+    <p><%= pluralize(@beer.ratings.count, 'rating', 'ratings') %>, average <%= @beer.avg_rating %></p>
+<% else %>
+    <p>0 ratings</p>
+<% end %>
 
 <p>
     <%= link_to "List of all breweries", breweries_path %>
