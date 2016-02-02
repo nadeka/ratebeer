@@ -2,7 +2,7 @@ module AverageRating
     extend ActiveSupport::Concern
 
     def avg_rating
-        sum = self.ratings.inject(0) { |sum, rating| sum + rating.score }
-        sum / self.ratings.count
+        return 0 if ratings.empty?
+        ratings.inject(0) { |sum, rating| sum + rating.score } / ratings.count.to_f
     end
 end

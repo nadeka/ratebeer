@@ -1,13 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<h1>List of Ratings</h1>
+<h1>Ratings</h1>
 
-<p>Number of ratings: <%= @ratings.count %></p>
+<h3><%= pluralize(@ratings.count, 'rating', 'ratings') %></h3>
 
-<ul>
+<table>
+  <thead>
+    <tr>
+      <th>Beer</th>
+      <th>Score</th>
+      <th>Rater</th>
+    </tr>
+  </thead>
+
+  <tbody>
     <% @ratings.each do |rating| %>
-    <li><%= rating %> <%= link_to 'Delete', rating, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+      <tr>
+        <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
+        <td><%= rating.score %></td>
+        <td><%= link_to "#{rating.user.username}", user_path(rating.user_id) %></td>
+      </tr>
     <% end %>
-</ul>
+  </tbody>
+</table>
 
-<%= link_to "New rating", new_rating_path %>
+<br>

@@ -9,13 +9,24 @@ class RatingsController < ApplicationController
     end
 
     def create
-        Rating.create params.require(:rating).permit(:score, :beer_id)
-        redirect_to ratings_path
+        @rating = Rating.create params.require(:rating).permit(:score, :beer_id)
+
+        respond_to do |format|
+          if @rating.save
+            current_user.ratings << @rating
+            format.html { redirect_to current_user, notice: 'Rating was successfully created.' }
+            format.json { render :show, status: :created, location: @rating }
+          else
+            @beers = Beer.all
+            format.html { render :new }
+            format.json { render json: @rating.errors, status: :unprocessable_entity }
+          end
+        end
     end
 
     def destroy
-        rating = Rating.find(params[:id])
-        rating.delete
-        redirect_to ratings_path
+        rating = Rating.find params[:id]
+        rating.delete if rating.user == current_user
+        redirect_to :back
     end
 end
