@@ -16,6 +16,7 @@
     <% end %>
 </ul>
 
-<h3><%= pluralize(@brewery.ratings.count, 'rating', 'ratings') %>, average <%= @brewery.avg_rating %></h3>
+<h3><%= pluralize(@brewery.ratings.count, 'rating', 'ratings') %><% if not @brewery.ratings.empty? %>, average <%= @brewery.avg_rating %><% end %></h3>
 
-<%= link_to('Edit', edit_brewery_path(@brewery)) if current_user %>
+<%= link_to('Edit', edit_brewery_path(@brewery)) if current_user %> <br>
+<%= link_to('Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }) if current_user %>

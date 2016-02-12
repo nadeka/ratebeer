@@ -2,7 +2,7 @@
 
 <h1><%= @user.username %></h1>
 
-<h3><%= pluralize(@user.ratings.count, 'rating', 'ratings') %>, average <%= @user.avg_rating %></h3>
+<h3><%= pluralize(@user.ratings.count, 'rating', 'ratings') %><% if not @user.ratings.empty? %>, average <%= @user.avg_rating %><% end %></h3>
 
 <ul>
     <% @user.ratings.each do |rating| %>
