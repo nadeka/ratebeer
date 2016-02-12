@@ -34,7 +34,7 @@ describe "User" do
 
                 it "can remove their rating" do
                     expect {
-                        click_on('destroy')
+                        click_on('Delete')
                     }.to change{Rating.count}.by(-1)
                 end
             end

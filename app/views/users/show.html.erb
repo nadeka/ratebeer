@@ -6,7 +6,7 @@
 
 <ul>
     <% @user.ratings.each do |rating| %>
-    <li><%= rating %> <%= link_to('destroy', rating, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == @user.id %></li>
+    <li><%= rating %> <%= link_to('Delete', rating, method: :delete, data: { confirm: 'Are you sure?' }) if current_user and current_user.id == @user.id %></li>
     <% end %>
 </ul>
 

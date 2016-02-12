@@ -35,6 +35,12 @@ describe "Beer" do
     end
 
     describe "when created" do
+        before :each do
+            FactoryGirl.create(:user)
+            log_in(username: 'Kate', password: 'Secret1')
+            visit beers_path
+        end
+
         it "is saved if the name is valid" do
             FactoryGirl.create(:brewery, name:"Koff", year:1938)
             visit new_beer_path
