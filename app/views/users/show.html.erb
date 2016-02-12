@@ -10,6 +10,10 @@
     <% end %>
 </ul>
 
+<% if not @user.favorite_beer.nil? %>
+    <h3>Favorite beer: <%= link_to "#{@user.favorite_beer.name}", @user.favorite_beer %></h3>
+<% end %>
+
 <h3><%= pluralize(@user.beer_clubs.count, 'club membership', 'club memberships') %></h3>
 
 <ul>
