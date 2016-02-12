@@ -11,6 +11,10 @@ class RatingsController < ApplicationController
     def create
         @rating = Rating.create params.require(:rating).permit(:score, :beer_id)
 
+        if current_user.nil?
+            redirect_to login_path, notice: 'You should be logged in.'
+        end
+
         respond_to do |format|
           if @rating.save
             current_user.ratings << @rating
