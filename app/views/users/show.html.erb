@@ -4,11 +4,26 @@
 
 <h3><%= pluralize(@user.ratings.count, 'rating', 'ratings') %><% if not @user.ratings.empty? %>, average <%= @user.avg_rating %><% end %></h3>
 
-<ul>
-    <% @user.ratings.each do |rating| %>
-    <li><%= rating %> <%= link_to('Delete', rating, method: :delete, data: { confirm: 'Are you sure?' }) if current_user and current_user.id == @user.id %></li>
-    <% end %>
-</ul>
+<% if not @user.ratings.empty? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Beer</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @user.ratings.each do |rating| %>
+          <tr>
+            <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
+            <td><%= rating.score %></td>
+            <td><%= link_to('Delete', rating, method: :delete, data: { confirm: 'Are you sure?' }) if current_user and current_user.id == @user.id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+<% end %>
 
 <% if not @user.favorite_beer.nil? %>
     <h3>Favorite beer: <%= link_to "#{@user.favorite_beer.name}", @user.favorite_beer %></h3>

@@ -10,7 +10,7 @@
 
 <ul>
     <% @beer_club.members.each do |member| %>
-    <li><%= member %></li>
+    <li><%= link_to "#{member.username}", member %></li>
     <% end %>
 </ul>
 

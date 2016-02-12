@@ -4,24 +4,26 @@
 
 <h3><%= pluralize(@ratings.count, 'rating', 'ratings') %></h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Beer</th>
-      <th>Score</th>
-      <th>Rater</th>
-    </tr>
-  </thead>
+<% if not @ratings.empty? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Beer</th>
+          <th>Score</th>
+          <th>Rater</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @ratings.each do |rating| %>
-      <tr>
-        <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
-        <td><%= rating.score %></td>
-        <td><%= link_to "#{rating.user.username}", user_path(rating.user_id) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @ratings.each do |rating| %>
+          <tr>
+            <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
+            <td><%= rating.score %></td>
+            <td><%= link_to "#{rating.user.username}", user_path(rating.user_id) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+<% end %>
 
 <br>
