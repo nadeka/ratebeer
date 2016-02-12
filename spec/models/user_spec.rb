@@ -8,34 +8,14 @@ RSpec.describe User, type: :model do
         expect(User.count).to eq(0)
     end
 
-    it "is not saved without a proper password" do
-        user1 = User.create username:"Kate", password:"Ab1", password_confirmation:"Ab1"
+    it "is not saved without a password" do
+        user = User.create username:"Kate"
 
-        expect(user1).not_to be_valid
-        expect(User.count).to eq(0)
-
-        user2 = User.create username:"Tom", password:"abcd", password_confirmation:"abcd"
-
-        expect(user2).not_to be_valid
-        expect(User.count).to eq(0)
-
-        user3 = User.create username:"Jack", password:"Abcd", password_confirmation:"Abcd"
-
-        expect(user3).not_to be_valid
-        expect(User.count).to eq(0)
-
-        user4 = User.create username:"Paul", password:"abc1", password_confirmation:"abc1"
-
-        expect(user4).not_to be_valid
-        expect(User.count).to eq(0)
-
-        user5 = User.create username:"Kim"
-
-        expect(user5).not_to be_valid
+        expect(user).not_to be_valid
         expect(User.count).to eq(0)
     end
 
-    describe "with a username and a proper password" do
+    describe "with a username and a password" do
         let(:user){ FactoryGirl.create(:user) }
 
         it "is saved" do
