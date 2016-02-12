@@ -9,8 +9,8 @@ script:
 deploy:
   provider: heroku
   app: dry-earth-75829
+  skip_cleanup: true
   run:
     - "rake db:migrate"
-    - "rake cleanup"
   api_key:
     secure: AvDCSGkj9YFP2jOogt4IeXSg8PSbi5Rlz0TulFscmc49QNmUcieLPdJKr4GeL/CN0VjKQ53oh2QgxVP6m2EjZqcxtixs4TQRhkG736IbT1s2LjLvNbOOo7RvjZqrp5gcEF75hzivR2gdnF5IGUzfeeNQ28cx9PcXctoW1ajv+n+GFNloHyiyBRVKnxKPOQkyK13ZhUtrFyn5IRvcXCsGbV3zG7Ag/kchpM1hommQ3QMs0gggacXng+fRVCkTwswtuI1VsvRm25Crx3LL0KR+6MHA5NVfoss7wQq8l1/2C4EtH4vJ8yeqGgInxpAE0fZIZLLf6QZoLlYhARXSmkYLXrPnMG3O6E+BDkroCDAxzRJi496fXPKTC0Eky/ae6OLt+ixvclbNi3NuzRN6AoxMa6HEKX1mSBrAp88qL6RTDJuJNj6XfBFnJCp0dE75f7auyZMPTmURYiI57fDcN3iPOKMupMsBtOFpnNMPS/MjVoDJ0B1NemXnehxe2qxyfjwhcm2/7kKThr1TuIAq+MFKlIbFCA0VhU0IhY1/ar8mwGMpFjE4d6crI4s9JVf3q+yFL2SjK2bq23pvr4Gerb0uOPA5DV8FPNvrbAa7tCY7ShkuvN6z0Qlf238WtLhyE443ZI2CX255Lrs3SJVgruw873BivkBPG9kGgtxSkWdb9Ho=
