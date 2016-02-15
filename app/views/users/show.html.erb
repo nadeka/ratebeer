@@ -26,7 +26,15 @@
 <% end %>
 
 <% if not @user.favorite_beer.nil? %>
-    <h3>Favorite beer: <%= link_to "#{@user.favorite_beer.name}", @user.favorite_beer %></h3>
+    <p>Favorite beer: <%= link_to "#{@user.favorite_beer.name}", @user.favorite_beer %></p>
+<% end %>
+
+<% if not @user.favorite_style.nil? %>
+    <p>Favorite beer style: <%= @user.favorite_style %></p>
+<% end %>
+
+<% if not @user.favorite_brewery.nil? %>
+    <p>Favorite brewery: <%= link_to "#{@user.favorite_brewery.name}", @user.favorite_brewery %></p>
 <% end %>
 
 <h3><%= pluralize(@user.beer_clubs.count, 'club membership', 'club memberships') %></h3>

@@ -18,7 +18,8 @@ describe "User" do
 
             describe "with ratings" do
                 before :each do
-                    create_beers_with_ratings(user, 20)
+                    brewery = Brewery.create name:"brewery", year:1847
+                    create_beers_with_ratings(user, "lager", brewery,  20)
                     visit user_path(user)
                 end
 

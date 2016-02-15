@@ -22,7 +22,9 @@ describe "Rating" do
         before :each do
             @ratings = [10, 20, 30, 0, 100]
 
-            create_beers_with_ratings(user, *@ratings)
+            brewery = Brewery.create name:"brewery", year:1237
+
+            create_beers_with_ratings(user, "lager", brewery, *@ratings)
 
             visit ratings_path
         end

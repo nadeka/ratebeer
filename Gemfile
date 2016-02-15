@@ -40,6 +40,8 @@ group :production do
     gem 'rails_12factor'
 end
 
+gem 'httparty'
+
 gem 'promise', '~> 0.3.1'
 
 # Use bcrypt for password encryption
