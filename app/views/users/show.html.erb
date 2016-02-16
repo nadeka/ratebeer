@@ -30,7 +30,7 @@
 <% end %>
 
 <% if not @user.favorite_style.nil? %>
-    <p>Favorite beer style: <%= @user.favorite_style %></p>
+    <p>Favorite beer style: <%= link_to "#{@user.favorite_style.name}", @user.favorite_style %></p>
 <% end %>
 
 <% if not @user.favorite_brewery.nil? %>

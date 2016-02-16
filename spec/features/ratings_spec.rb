@@ -23,8 +23,9 @@ describe "Rating" do
             @ratings = [10, 20, 30, 0, 100]
 
             brewery = Brewery.create name:"brewery", year:1237
+            style = FactoryGirl.create(:style)
 
-            create_beers_with_ratings(user, "lager", brewery, *@ratings)
+            create_beers_with_ratings(user, style, brewery, *@ratings)
 
             visit ratings_path
         end

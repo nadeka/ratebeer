@@ -17,7 +17,7 @@ RSpec.describe Brewery, type: :model do
 
     describe "with a name and a year" do
         let(:brewery){ Brewery.create name:"brewery", year:1927 }
-        let!(:beer){ Beer.create name:"beer", style:"lager", brewery_id:brewery.id }
+        let!(:beer){ Beer.create name:"beer", brewery_id:brewery.id }
 
         it "is saved" do
             expect(brewery.name).to eq("brewery")

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :memberships
   resources :beer_clubs
   resources :users
+  resources :styles
   resource :session, only: [:create, :new, :destroy]
   resources :beers, :breweries
   resources :ratings, only: [:create, :new, :index, :destroy]

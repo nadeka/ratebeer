@@ -30,7 +30,7 @@ describe "Beer" do
              click_link "Karhu"
 
              expect(page).to have_content "Karhu"
-             expect(page).to have_content "Style: Lager"
+             expect(page).to have_content "Style: lager"
         end
     end
 
@@ -43,10 +43,11 @@ describe "Beer" do
 
         it "is saved if the name is valid" do
             FactoryGirl.create(:brewery, name:"Koff", year:1938)
+            FactoryGirl.create(:style)
             visit new_beer_path
 
             fill_in('beer_name', with:'Lite')
-            select('Weizen', from:'beer[style]')
+            select('lager', from:'beer[style_id]')
             select('Koff', from:'beer[brewery_id]')
 
             expect{
@@ -58,9 +59,10 @@ describe "Beer" do
 
         it "is not saved if the name is invalid" do
             FactoryGirl.create(:brewery, name:"Koff", year:1938)
+            FactoryGirl.create(:style)
             visit new_beer_path
 
-            select('Weizen', from:'beer[style]')
+            select('lager', from:'beer[style_id]')
             select('Koff', from:'beer[brewery_id]')
 
             click_button "Create Beer"
