@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resource :session, only: [:create, :new, :destroy]
   resources :beers, :breweries
   resources :ratings, only: [:create, :new, :index, :destroy]
+  resources :places, only:[:index, :show]
 
   root 'breweries#index'
 

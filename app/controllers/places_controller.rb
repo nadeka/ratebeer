@@ -2,23 +2,18 @@ class PlacesController < ApplicationController
     def index
     end
 
+    def show
+        @place = Rails.cache.read(session['city']).detect{|place| place.id == params[:id]}
+        render :show
+    end
+
     def search
-        api_key = "96ce1942872335547853a0bb3b0c24db"
-        url = 'http://stark-oasis-9187.herokuapp.com/api/'
+        @places = BeerMappingApi.places_in(params[:city])
+        session['city'] = params[:city]
 
-        response = HTTParty.get "#{url}#{ERB::Util.url_encode(params[:city])}"
-
-        places_from_api = response.parsed_response["bmp_locations"]["location"]
-
-        if places_from_api.is_a?(Hash) and places_from_api['id'].nil?
-            redirect_to places_path, :notice => "No places in #{params[:city]}."
+        if @places.empty?
+            redirect_to places_path, :notice => "No places found in #{params[:city]}."
         else
-            places_from_api = [places_from_api] if places_from_api.is_a?(Hash)
-
-            @places = places_from_api.map do | location |
-                Place.new(location)
-            end
-
             render :index
         end
     end
