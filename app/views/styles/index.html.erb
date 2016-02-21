@@ -1,11 +1,9 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Styles</h1>
 
 <h3><%= pluralize(@styles.count, 'style', 'styles') %></h3>
 
 <% if not @styles.empty? %>
-    <table>
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>Name</th>
@@ -24,4 +22,4 @@
 
 <br>
 
-<%= link_to('New style', new_style_path) if current_user %>
+<%= link_to('New style', new_style_path, class:'btn btn-primary') if current_user %>

@@ -1,11 +1,9 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Beers</h1>
 
 <h3><%= pluralize(@beers.count, 'beer', 'beers') %></h3>
 
 <% if not @beers.empty? %>
-    <table>
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>Name</th>
@@ -28,4 +26,4 @@
 
 <br>
 
-<%= link_to('New beer', new_beer_path) if current_user %>
+<%= link_to('New beer', new_beer_path, class:'btn btn-primary') if current_user %>

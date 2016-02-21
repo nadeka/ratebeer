@@ -1,0 +1,17 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Average rating</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% resources.each do |resource| %>
+      <tr>
+        <td><%= link_to "#{resource.name}", resource %></td>
+        <td><%= resource.avg_rating %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

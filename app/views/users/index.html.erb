@@ -1,11 +1,9 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Users</h1>
 
 <h3><%= pluralize(@users.count, 'user', 'users') %></h3>
 
 <% if not @users.empty? %>
-    <table>
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>Username</th>

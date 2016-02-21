@@ -1,29 +1,85 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Ratings</h1>
 
 <h3><%= pluralize(@ratings.count, 'rating', 'ratings') %></h3>
 
 <% if not @ratings.empty? %>
-    <table>
-      <thead>
-        <tr>
-          <th>Beer</th>
-          <th>Score</th>
-          <th>Rater</th>
-        </tr>
-      </thead>
+    <h4>Most recent</h4>
 
-      <tbody>
-        <% @ratings.each do |rating| %>
-          <tr>
-            <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
-            <td><%= rating.score %></td>
-            <td><%= link_to "#{rating.user.username}", user_path(rating.user_id) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <% if not @recent.empty? %>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Beer</th>
+              <th>Score</th>
+              <th>Rater</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @recent.each do |rating| %>
+              <tr>
+                <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
+                <td><%= rating.score %></td>
+                <td><%= link_to "#{rating.user.username}", user_path(rating.user_id) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    <% end %>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Top beers</h4>
+
+            <% if not @top_beers.empty? %>
+                <%= render 'top_list', resources: @top_beers %>
+            <% end %>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Top styles</h4>
+
+            <% if not @top_styles.empty? %>
+                <%= render 'top_list', resources: @top_styles %>
+            <% end %>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Top breweries</h4>
+
+            <% if not @top_breweries.empty? %>
+                <%= render 'top_list', resources: @top_breweries %>
+            <% end %>
+        </div>
+    </div>
+
+    <h4>Most active raters</h4>
+
+    <% if not @top_raters.empty? %>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Favorite beer</th>
+              <th>Favorite style</th>
+              <th>Favorite brewery</th>
+              <th>Ratings</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @top_raters.each do |rater| %>
+              <tr>
+                <td><%= link_to "#{rater.username}", rater %></td>
+                <td><%= link_to "#{rater.favorite_beer.name}", rater.favorite_beer %></td>
+                <td><%= link_to "#{rater.favorite_style.name}", rater.favorite_style %></td>
+                <td><%= link_to "#{rater.favorite_brewery.name}", rater.favorite_brewery %></td>
+                <td><%= rater.ratings.count %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    <% end %>
 <% end %>
 
 <br>

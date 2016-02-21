@@ -1,5 +1,6 @@
 class Beer < ActiveRecord::Base
     include AverageRating
+    extend Top
 
     validates :name, length: { minimum: 1 }
 

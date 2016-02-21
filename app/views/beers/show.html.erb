@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= @beer.name %></h1>
 
 <p>
@@ -24,10 +22,8 @@
     <%= f.submit %>
   <% end %>
 
-  <%= link_to 'Edit', edit_beer_path(@beer) %>
+  <%= link_to 'Edit', edit_beer_path(@beer), class:'btn btn-primary' %>
 
 <% end %>
 
-<br>
-
-<%= link_to('Destroy', @beer, method: :delete, data: { confirm: 'Are you sure?' }) if current_user %>
+<%= link_to('Destroy', @beer, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger') if current_user %>
