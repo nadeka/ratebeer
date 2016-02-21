@@ -60,9 +60,6 @@
           <thead>
             <tr>
               <th>Username</th>
-              <th>Favorite beer</th>
-              <th>Favorite style</th>
-              <th>Favorite brewery</th>
               <th>Ratings</th>
             </tr>
           </thead>
@@ -71,9 +68,6 @@
             <% @top_raters.each do |rater| %>
               <tr>
                 <td><%= link_to "#{rater.username}", rater %></td>
-                <td><%= link_to "#{rater.favorite_beer.name}", rater.favorite_beer %></td>
-                <td><%= link_to "#{rater.favorite_style.name}", rater.favorite_style %></td>
-                <td><%= link_to "#{rater.favorite_brewery.name}", rater.favorite_brewery %></td>
                 <td><%= rater.ratings.count %></td>
               </tr>
             <% end %>
