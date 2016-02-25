@@ -26,4 +26,6 @@
 
 <br>
 
-<%= link_to('New beer', new_beer_path, class:'btn btn-primary') if current_user %>
+<% if ensure_that_admin %>
+    <%= link_to('New beer', new_beer_path, class:'btn btn-primary') if current_user %>
+<% end %>

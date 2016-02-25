@@ -1,6 +1,12 @@
-<h1><%= @user.username %></h1>
+<h1><%= @user.username %>
+    <% if not @user.active %>
+        <span class="label label-info">
+              Banned
+        </span>
+    <% end %>
+</h1>
 
-<h3><%= pluralize(@user.ratings.count, 'rating', 'ratings') %><% if not @user.ratings.empty? %>, average <%= @user.avg_rating %><% end %></h3>
+<h3><%= pluralize(@user.ratings.count, 'rating', 'ratings') %><% if not @user.ratings.empty? %>, average <%= round(@user.avg_rating) %><% end %></h3>
 
 <% if not @user.ratings.empty? %>
     <table class="table table-hover">
@@ -42,6 +48,10 @@
     <li><%= link_to "#{beer_club}", beer_club %></li>
     <% end %>
 </ul>
+
+<% if ensure_that_admin and not @user.admin %>
+    <%= link_to "#{@user.active? ? "Freeze" : "Reactivate"}", toggle_activity_user_path(@user.id), method: :put, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+<% end %>
 
 <% if current_user and current_user.id == @user.id %>
     <%= link_to 'Change password', edit_user_path(@user), class:'btn btn-primary' %>

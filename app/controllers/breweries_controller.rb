@@ -1,6 +1,6 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_that_logged_in, except: [:index, :show]
+  before_action :ensure_that_logged_in, :ensure_that_admin, except: [:index, :show]
 
 
   # GET /breweries
@@ -22,6 +22,15 @@ class BreweriesController < ApplicationController
 
   # GET /breweries/1/edit
   def edit
+  end
+
+  def toggle_activity
+      brewery = Brewery.find(params[:id])
+      brewery.update_attribute :active, (not brewery.active)
+
+      new_status = brewery.active? ? "active" : "retired"
+
+      redirect_to :back, notice:"Brewery status changed to #{new_status}."
   end
 
   # POST /breweries

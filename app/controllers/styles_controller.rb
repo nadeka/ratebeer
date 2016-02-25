@@ -1,6 +1,6 @@
 class StylesController < ApplicationController
   before_action :set_style, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_that_logged_in, except: [:index, :show]
+  before_action :ensure_that_logged_in, :ensure_that_admin, except: [:index, :show]
 
   # GET /styles
   # GET /styles.json
@@ -29,7 +29,7 @@ class StylesController < ApplicationController
 
     respond_to do |format|
       if @style.save
-        format.html { redirect_to @styles, notice: 'Style was successfully created.' }
+        format.html { redirect_to @style, notice: 'Style was successfully created.' }
         format.json { render :show, status: :created, location: @style }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class StylesController < ApplicationController
   def update
     respond_to do |format|
       if @style.update(style_params)
-        format.html { redirect_to @styles, notice: 'Style was successfully updated.' }
+        format.html { redirect_to @style, notice: 'Style was successfully updated.' }
         format.json { render :show, status: :ok, location: @style }
       else
         format.html { render :edit }

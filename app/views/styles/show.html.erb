@@ -1,11 +1,15 @@
 <h1><%= @style.name %></h1>
 
 <p>
-    <strong>Description</strong><br>
-    <%= @style.description %>
+    <% if @style.description.empty? %>
+        No description.
+    <% else %>
+        <%= @style.description %>
+    <% end %>
 </p>
 
 <br>
 
-<%= link_to 'Edit', @style, class:'btn btn-primary' if current_user %>
-<%= link_to('Destroy', @style, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger') if current_user %>
+<% if ensure_that_admin %>
+    <%= edit_and_destroy_buttons(@style) %>
+<% end %>

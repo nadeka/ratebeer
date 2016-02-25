@@ -26,4 +26,6 @@
 
 <br>
 
-<%= link_to('New beer club', new_beer_club_path, class:'btn btn-primary') if current_user %>
+<% if ensure_that_admin %>
+    <%= link_to('New beer club', new_beer_club_path, class:'btn btn-primary') if current_user %>
+<% end %>

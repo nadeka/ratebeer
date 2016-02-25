@@ -21,6 +21,18 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def toggle_activity
+      user = User.find(params[:id])
+
+      if not user.admin
+          user.update_attribute :active, (not user.active)
+
+          new_status = user.active? ? "active" : "frozen"
+
+          redirect_to :back, notice:"User status changed to #{new_status}."
+      end
+  end
+
   # POST /users
   # POST /users.json
   def create

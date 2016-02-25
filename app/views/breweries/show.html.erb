@@ -22,7 +22,9 @@
     <% end %>
 </ul>
 
-<h3><%= pluralize(@brewery.ratings.count, 'rating', 'ratings') %><% if not @brewery.ratings.empty? %>, average <%= @brewery.avg_rating %><% end %></h3>
+<h3><%= pluralize(@brewery.ratings.count, 'rating', 'ratings') %><% if not @brewery.ratings.empty? %>, average <%= round(@brewery.avg_rating) %><% end %></h3>
 
-<%= link_to('Edit', edit_brewery_path(@brewery), class:'btn btn-primary') if current_user %>
-<%= link_to('Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger') if current_user %>
+<% if ensure_that_admin %>
+    <%= link_to "Change activity", toggle_activity_brewery_path(@brewery.id), method: :put, class: "btn btn-primary" %>
+    <%= edit_and_destroy_buttons(@brewery) %>
+<% end %>

@@ -10,7 +10,7 @@
     <% resources.each do |resource| %>
       <tr>
         <td><%= link_to "#{resource.name}", resource %></td>
-        <td><%= resource.avg_rating %></td>
+        <td><%= round(resource.avg_rating) %></td>
       </tr>
     <% end %>
   </tbody>
