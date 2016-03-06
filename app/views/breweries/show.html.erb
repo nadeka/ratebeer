@@ -1,28 +1,30 @@
-<h1><%= @brewery.name %>
-  <span class="label label-info">
-      <% if not @brewery.active %>
-        Retired
-        <% else %>
-        Active
+<% cache @brewery do %>
+    <h1><%= @brewery.name %>
+      <span class="label label-info">
+          <% if not @brewery.active %>
+            Retired
+            <% else %>
+            Active
+            <% end %>
+      </span>
+    </h1>
+
+    <p>
+      <i>Established in <%= @brewery.year %></i>
+    </p>
+
+    <h3><%= pluralize(@brewery.beers.count, 'beer', 'beers') %></h3>
+
+    <ul>
+        <% @brewery.beers.each do |beer| %>
+        <li>
+            <%= link_to "#{beer.name}", beer %>
+        </li>
         <% end %>
-  </span>
-</h1>
+    </ul>
 
-<p>
-  <i>Established in <%= @brewery.year %></i>
-</p>
-
-<h3><%= pluralize(@brewery.beers.count, 'beer', 'beers') %></h3>
-
-<ul>
-    <% @brewery.beers.each do |beer| %>
-    <li>
-        <%= link_to "#{beer.name}", beer %>
-    </li>
-    <% end %>
-</ul>
-
-<h3><%= pluralize(@brewery.ratings.count, 'rating', 'ratings') %><% if not @brewery.ratings.empty? %>, average <%= round(@brewery.avg_rating) %><% end %></h3>
+    <h3><%= pluralize(@brewery.ratings.count, 'rating', 'ratings') %><% if not @brewery.ratings.empty? %>, average <%= round(@brewery.avg_rating) %><% end %></h3>
+<% end %>
 
 <% if ensure_that_admin %>
     <%= link_to "Change activity", toggle_activity_brewery_path(@brewery.id), method: :put, class: "btn btn-primary" %>

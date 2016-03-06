@@ -2,17 +2,17 @@ class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
   before_action :ensure_that_logged_in, :ensure_that_admin, except: [:index, :show]
+  before_action :expire_beerlist, only: [:create, :edit, :update, :destroy]
+  before_action :skip_if_cached, only: [:index]
+
+  $sort_options = {'name_asc' => 'name ASC', 'name_desc' => 'name DESC',
+                   'style_asc' => 'styles.name ASC', 'style_desc' => 'styles.name DESC',
+                   'brewery_asc' => 'breweries.name ASC', 'brewery_desc' => 'breweries.name DESC'}
 
   # GET /beers
   # GET /beers.json
   def index
-    order = params[:order] || 'name'
-
-    @beers = case order
-        when 'name' then Beer.order(:name)
-        when 'style' then Beer.includes(:style).order('styles.name')
-        when 'brewery' then Beer.includes(:brewery).order('breweries.name')
-    end
+      @beers = Beer.includes(:style, :brewery).order($sort_options[@order] || 'name ASC')
   end
 
   # GET /beers/1
@@ -74,7 +74,7 @@ class BeersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_beer
-      @beer = Beer.find(params[:id])
+        @beer = Beer.find(params[:id])
     end
 
     def set_breweries_and_styles_for_template
@@ -82,8 +82,18 @@ class BeersController < ApplicationController
         @styles = Style.all
      end
 
+     def expire_beerlist
+        $sort_options.keys.each { |order| expire_fragment("beerlist-#{order}")  }
+     end
+
+     def skip_if_cached
+         @order = params[:order] || 'name_asc'
+
+         return render :index if fragment_exist?("beerlist-#{@order}") and request.format.html?
+     end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_params
-      params.require(:beer).permit(:name, :style_id, :brewery_id)
+        params.require(:beer).permit(:name, :style_id, :brewery_id)
     end
 end

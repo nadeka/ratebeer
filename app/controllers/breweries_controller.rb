@@ -1,13 +1,18 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
   before_action :ensure_that_logged_in, :ensure_that_admin, except: [:index, :show]
+  before_action :expire_brewerylist, only: [:edit, :update, :create, :destroy]
+  before_action :skip_if_cached, only: [:index]
+
+  $sort_options = {'name_asc' => 'name ASC', 'name_desc' => 'name DESC',
+                   'year_asc' => 'year ASC', 'year_desc' => 'year DESC'}
 
 
   # GET /breweries
   # GET /breweries.json
   def index
-      @active_breweries = Brewery.active
-      @retired_breweries = Brewery.retired
+      @active_breweries = Brewery.active.order($sort_options[@order] || 'name ASC')
+      @retired_breweries = Brewery.retired.order($sort_options[@order] || 'name ASC')
   end
 
   # GET /breweries/1
@@ -77,6 +82,16 @@ class BreweriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_brewery
       @brewery = Brewery.find(params[:id])
+    end
+
+    def expire_brewerylist
+       $sort_options.keys.each { |order| expire_fragment("brewerylist-#{order}")  }
+    end
+
+    def skip_if_cached
+        @order = params[:order] || 'name_asc'
+
+        render :index if fragment_exist?("brewerylist-#{@order}") and request.format.html?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

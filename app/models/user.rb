@@ -3,13 +3,19 @@ class User < ActiveRecord::Base
 
     has_secure_password
 
-    validates :username, uniqueness: true, length: 3..15
-    validates :password, length: 4..30
+    validates :username, uniqueness: true, length: 1..15
+    validates :password, length: 1..30
 
     has_many :ratings, dependent: :destroy
     has_many :beers, through: :ratings
     has_many :memberships, dependent: :destroy
     has_many :beer_clubs, -> { uniq }, through: :memberships
+
+    after_initialize :set_active
+
+    def set_active
+        self.active = true if self.active.nil?
+    end
 
     def to_s
         "#{self.username}"
@@ -28,7 +34,7 @@ class User < ActiveRecord::Base
     def favorite_brewery
         favorite :brewery
     end
-    
+
     private
 
     def favorite(category)

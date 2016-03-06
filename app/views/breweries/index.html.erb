@@ -2,15 +2,17 @@
 
 <h2>Active</h2>
 
-<p><%= pluralize(@active_breweries.count, 'brewery', 'breweries') %> active</p>
+<% cache "brewerylist-#{@order}", skip_digest: true do %>
+    <p><%= pluralize(@active_breweries.count, 'brewery', 'breweries') %> active</p>
 
-<%= render 'list', breweries: @active_breweries %>
+    <%= render 'list', breweries: @active_breweries %>
 
-<h2>Retired</h2>
+    <h2>Retired</h2>
 
-<p> <%= pluralize(@retired_breweries.count, 'brewery', 'breweries') %> retired</p>
+    <p> <%= pluralize(@retired_breweries.count, 'brewery', 'breweries') %> retired</p>
 
-<%= render 'list', breweries: @retired_breweries %>
+    <%= render 'list', breweries: @retired_breweries %>
+<% end %>
 
 <br>
 
