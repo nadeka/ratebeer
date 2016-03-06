@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
 
     has_secure_password
 
-    validates :username, uniqueness: true, length: 1..15
-    validates :password, length: 1..30
+    validates :username, presence: true, uniqueness: true, length: 1..15
+    validates :password, presence: true, length: 1..30
 
     has_many :ratings, dependent: :destroy
     has_many :beers, through: :ratings
@@ -33,6 +33,17 @@ class User < ActiveRecord::Base
 
     def favorite_brewery
         favorite :brewery
+    end
+
+    def self.create_with_auth(auth)
+        create! do |user|
+           user.username = auth['info']['nickname']
+           password = SecureRandom.hex(10)
+           user.uid = auth['uid']
+           user.password = password
+           user.password_digest = password
+           user.provider = auth['provider']
+        end
     end
 
     private

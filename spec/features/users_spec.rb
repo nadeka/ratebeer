@@ -12,7 +12,7 @@ describe "User" do
             end
 
             it "can log in" do
-                expect(page).to have_content 'Welcome back!'
+                expect(page).to have_content 'Logged in!'
                 expect(page).to have_content 'Kate'
             end
 
@@ -46,7 +46,7 @@ describe "User" do
             log_in(username: 'Kate', password: 'wrong')
 
             expect(current_path).to eq(login_path)
-            expect(page).to have_content 'Incorrect password.'
+            expect(page).to have_content 'Invalid username or password.'
         end
     end
 

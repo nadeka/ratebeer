@@ -35,6 +35,8 @@ end
 gem 'bootstrap-sass'
 gem 'dalli'
 gem 'puma'
+gem 'figaro'
+gem 'omniauth-github'
 gem 'memcachier'
 gem 'httparty'
 gem 'promise', '~> 0.3.1'
