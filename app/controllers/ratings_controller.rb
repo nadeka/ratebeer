@@ -6,7 +6,7 @@ class RatingsController < ApplicationController
         @ratings = Rating.includes(:beer, :user).all
         @recent = Rating.includes(:beer, :user).recent(5)
         @top_breweries = Brewery.top(3)
-        @top_beers = Beer.includes.top(3)
+        @top_beers = Beer.top(3)
         @top_styles = Style.top(3)
         @top_raters = User.top_raters(5)
     end
