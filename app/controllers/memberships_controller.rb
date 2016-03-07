@@ -4,7 +4,7 @@ class MembershipsController < ApplicationController
   # GET /memberships
   # GET /memberships.json
   def index
-    @memberships = Membership.all
+    @memberships = Membership.where(confirmed: true)
   end
 
   # GET /memberships/1
@@ -22,11 +22,23 @@ class MembershipsController < ApplicationController
   def edit
   end
 
+  def confirm
+      membership = Membership.find(params[:id])
+      membership.update_attribute :confirmed, true
+
+      redirect_to :back, notice:"Membership of #{membership.user.username} confirmed."
+  end
+
   # POST /memberships
   # POST /memberships.json
   def create
     @membership = Membership.new(membership_params)
     @membership.user_id = current_user.id
+    @membership.confirmed = false
+
+    if @membership.beer_club.memberships.where(confirmed: true).empty?
+        @membership.confirmed = true
+    end
 
     respond_to do |format|
       if @membership.save

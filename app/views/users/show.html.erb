@@ -6,6 +6,22 @@
     </span>
 <% end %>
 
+<div class="panel panel-default">
+  <div class="panel-body">
+      <% if not @user.favorite_beer.nil? %>
+          <p>Favorite beer: <%= link_to "#{@user.favorite_beer.name}", @user.favorite_beer %></p>
+      <% end %>
+
+      <% if not @user.favorite_style.nil? %>
+          <p>Favorite beer style: <%= link_to "#{@user.favorite_style.name}", @user.favorite_style %></p>
+      <% end %>
+
+      <% if not @user.favorite_brewery.nil? %>
+          <p>Favorite brewery: <%= link_to "#{@user.favorite_brewery.name}", @user.favorite_brewery %></p>
+      <% end %>
+  </div>
+</div>
+
 <h3><%= pluralize(@user.ratings.count, 'rating', 'ratings') %><% if not @user.ratings.empty? %>, average <%= round(@user.avg_rating) %><% end %></h3>
 
 <% if not @user.ratings.empty? %>
@@ -22,32 +38,30 @@
           <tr>
             <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
             <td><%= rating.score %></td>
-            <td><%= link_to('Delete', rating, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger') if current_user and current_user.id == @user.id %></td>
+            <td><%= link_to('Delete', rating, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-xs btn-danger') if current_user and current_user.id == @user.id %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
 <% end %>
 
-<% if not @user.favorite_beer.nil? %>
-    <p>Favorite beer: <%= link_to "#{@user.favorite_beer.name}", @user.favorite_beer %></p>
-<% end %>
-
-<% if not @user.favorite_style.nil? %>
-    <p>Favorite beer style: <%= link_to "#{@user.favorite_style.name}", @user.favorite_style %></p>
-<% end %>
-
-<% if not @user.favorite_brewery.nil? %>
-    <p>Favorite brewery: <%= link_to "#{@user.favorite_brewery.name}", @user.favorite_brewery %></p>
-<% end %>
-
-<h3><%= pluralize(@user.beer_clubs.count, 'club membership', 'club memberships') %></h3>
+<h3><%= pluralize(@confirmed_memberships.count, 'club membership', 'club memberships') %></h3>
 
 <ul>
-    <% @user.beer_clubs.each do |beer_club| %>
-    <li><%= link_to "#{beer_club}", beer_club %></li>
+    <% @confirmed_memberships.each do |membership| %>
+        <li><%= link_to "#{membership.beer_club}", membership.beer_club %></li>
     <% end %>
 </ul>
+
+<% if current_user.id == @user.id %>
+    <h3><%= pluralize(@unconfirmed_memberships.count, 'unconfirmed club membership', 'unconfirmed club memberships') %></h3>
+
+    <ul>
+        <% @unconfirmed_memberships.each do |membership| %>
+            <li><%= link_to "#{membership.beer_club}", membership.beer_club %></li>
+        <% end %>
+    </ul>
+<% end %>
 
 <% if ensure_that_admin and not @user.admin %>
     <%= link_to "#{@user.active? ? "Freeze" : "Reactivate"}", toggle_activity_user_path(@user.id), method: :put, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>

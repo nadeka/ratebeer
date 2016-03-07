@@ -81,7 +81,7 @@ class BreweriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_brewery
-      @brewery = Brewery.find(params[:id])
+        @brewery = Brewery.find(params[:id])
     end
 
     def expire_brewerylist
@@ -91,11 +91,11 @@ class BreweriesController < ApplicationController
     def skip_if_cached
         @order = params[:order] || 'name_asc'
 
-        render :index if fragment_exist?("brewerylist-#{@order}") and request.format.html?
+        return render :index if fragment_exist?("brewerylist-#{@order}") and request.format.html?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def brewery_params
-      params.require(:brewery).permit(:name, :year, :active)
+        params.require(:brewery).permit(:name, :year, :active)
     end
 end

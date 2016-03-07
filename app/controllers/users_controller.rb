@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+      @confirmed_memberships = @user.memberships.where confirmed: true
+      @unconfirmed_memberships = @user.memberships.where confirmed: false
   end
 
   # GET /users/new

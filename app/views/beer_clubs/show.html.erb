@@ -4,20 +4,35 @@
   <i>Founded in <%= @beer_club.founded %></i>
 </p>
 
-<h3><%= pluralize(@beer_club.members.count, 'member', 'members') %></h3>
+<h3><%= pluralize(@memberships.count, 'member', 'members') %></h3>
 
 <ul>
-    <% @beer_club.members.each do |member| %>
-    <li><%= link_to "#{member.username}", member %></li>
+    <% @memberships.each do |membership| %>
+        <li><%= link_to "#{membership.user.username}", membership.user %></li>
     <% end %>
 </ul>
 
-<% if current_user and not @is_member %>
+<% if current_user and not @current_user_membership %>
     <%= form_for(@membership) do |f| %>
         <%= f.hidden_field :beer_club_id %>
         <%= f.submit value:"Join the club" %>
     <% end %>
-<% elsif current_user and @is_member %>
+<% elsif current_user and not @current_user_membership.confirmed %>
+    <p>Your membership has not been confirmed yet.</p>
+<% elsif current_user and @current_user_membership %>
+    <% if @unconfirmed.empty? %>
+        <p>No unconfirmed memberships.</p>
+    <% else %>
+        <h3>Unconfirmed memberships</h3>
+        <ul>
+            <% @unconfirmed.each do |membership| %>
+                <li><%= link_to "#{membership.user.username}", membership.user %>
+                    <%= link_to('Confirm', confirm_membership_path(membership), method: :put, class:'btn btn-xs btn-primary') %>
+                </li>
+            <% end %>
+        </ul>
+    <% end %>
+
     <%= form_for(@membership, method: "delete") do |f| %>
         <%= f.hidden_field :beer_club_id %>
         <%= f.submit value: "End the membership" %>
