@@ -1,17 +1,27 @@
 <h1>Breweries</h1>
 
-<h2>Active</h2>
+<h3><%= pluralize(@breweries.count, 'brewery', 'breweries') %></h3>
 
-<% cache "brewerylist-#{@order}", skip_digest: true do %>
-    <p><%= pluralize(@active_breweries.count, 'brewery', 'breweries') %> active</p>
+<% if not @breweries.empty? %>
+    <table class="table table-hover">
+      <thead>
+          <tr>
+            <th><%= sortable "name", "Name" %></th>
+            <th><%= sortable "year", "Year" %></th>
+            <th><%= sortable "active", "Status" %></th>
+          </tr>
+      </thead>
 
-    <%= render 'list', breweries: @active_breweries %>
-
-    <h2>Retired</h2>
-
-    <p> <%= pluralize(@retired_breweries.count, 'brewery', 'breweries') %> retired</p>
-
-    <%= render 'list', breweries: @retired_breweries %>
+      <tbody>
+      <% @breweries.each do |brewery| %>
+          <tr>
+            <td><%= link_to brewery.name, brewery %></td>
+            <td><%= brewery.year %></td>
+            <td><%= brewery.active? ? "Active" : "Retired" %></td>            
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 <% end %>
 
 <br>

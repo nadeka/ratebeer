@@ -1,29 +1,27 @@
 <h1>Beers</h1>
 
-<% cache "beerlist-#{@order}", skip_digest: true do %>
-    <h3><%= pluralize(@beers.count, 'beer', 'beers') %></h3>
+<h3><%= pluralize(@beers.count, 'beer', 'beers') %></h3>
 
-    <% if not @beers.empty? %>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th><%= link_to 'Name', beers_path(order:"#{@order == 'name_asc' ? 'name_desc' : 'name_asc'}") %></th>
-              <th><%= link_to 'Style', beers_path(order:"#{@order == 'style_asc' ? 'style_desc' : 'style_asc'}") %></th>
-              <th><%= link_to 'Brewery', beers_path(order:"#{@order == 'brewery_asc' ? 'brewery_desc' : 'brewery_asc'}") %></th>
-            </tr>
-          </thead>
+<% if not @beers.empty? %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th><%= sortable "name", "Name" %></th>
+          <th><%= sortable "styles.name", "Style" %></th>
+          <th><%= sortable "breweries.name", "Brewery" %></th>
+        </tr>
+      </thead>
 
-          <tbody>
-            <% @beers.each do |beer| %>
+      <tbody>
+        <% @beers.each do |beer| %>
               <tr>
-                <td><%= link_to "#{beer.name}", beer %></td>
-                <td><%= link_to "#{beer.style.name}", beer.style %></td>
-                <td><%= link_to "#{beer.brewery.name}", beer.brewery %></td>
+                <td><%= link_to beer.name, beer %></td>
+                <td><%= link_to beer.style.name, beer.style %></td>
+                <td><%= link_to beer.brewery.name, beer.brewery %></td>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-    <% end %>
+        <% end %>
+      </tbody>
+    </table>
 <% end %>
 
 <br>

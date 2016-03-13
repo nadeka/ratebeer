@@ -23,6 +23,6 @@ module Ratebeer
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths += Dir["#{Rails.root}/lib"]
-    config.action_dispatch.default_headers = { 'X-Frame-Options' => 'ALLOWALL' }  
+    config.action_dispatch.default_headers = { 'X-Frame-Options' => 'ALLOWALL' }
   end
 end

@@ -1,8 +1,8 @@
-<h1>Ratings</h1>
-
 <% cache 'ratings', skip_digest: true do %>
+    <h1>Ratings</h1>
+
     <h3><%= pluralize(@ratings.count, 'rating', 'ratings') %></h3>
-    
+
     <% if not @ratings.empty? %>
         <h4>Most recent</h4>
 
@@ -21,7 +21,7 @@
                   <tr>
                     <td><%= link_to "#{rating.beer.name}", rating.beer %></td>
                     <td><%= rating.score %></td>
-                    <td><%= link_to "#{rating.user.username}", user_path(rating.user_id) %></td>
+                    <td><%= link_to "#{rating.user.username}", rating.user %></td>
                   </tr>
                 <% end %>
               </tbody>

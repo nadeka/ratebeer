@@ -53,7 +53,7 @@
     <% end %>
 </ul>
 
-<% if current_user.id == @user.id %>
+<% if current_user and current_user.id == @user.id %>
     <h3><%= pluralize(@unconfirmed_memberships.count, 'unconfirmed club membership', 'unconfirmed club memberships') %></h3>
 
     <ul>
@@ -61,13 +61,11 @@
             <li><%= link_to "#{membership.beer_club}", membership.beer_club %></li>
         <% end %>
     </ul>
+
+    <%= link_to 'Change password', edit_user_path(@user), class:'btn btn-primary' %>
+    <%= link_to 'Delete account', @user, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger' %>
 <% end %>
 
 <% if ensure_that_admin and not @user.admin %>
     <%= link_to "#{@user.active? ? "Freeze" : "Reactivate"}", toggle_activity_user_path(@user.id), method: :put, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
-<% end %>
-
-<% if current_user and current_user.id == @user.id %>
-    <%= link_to 'Change password', edit_user_path(@user), class:'btn btn-primary' %>
-    <%= link_to 'Delete account', @user, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger' %>
 <% end %>

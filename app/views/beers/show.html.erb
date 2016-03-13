@@ -1,29 +1,20 @@
 <% cache @beer do %>
     <h1><%= @beer.name %></h1>
 
-    <p>
-        <strong>Style:</strong>
-        <%= link_to "#{@beer.style.name}", @beer.style %>
-    </p>
-
-    <p>
-        <strong>Brewery:</strong>
-        <%= link_to "#{@beer.brewery.name}", @beer.brewery %>
-    </p>
+    <p><strong>Style: </strong><%= link_to "#{@beer.style.name}", @beer.style %></p>
+    <p><strong>Brewery: </strong><%= link_to "#{@beer.brewery.name}", @beer.brewery %></p>
 
     <h3><%= pluralize(@beer.ratings.count, 'rating', 'ratings') %><% if not @beer.ratings.empty? %>, average <%= round(@beer.avg_rating) %><% end %></h3>
-<% end %>
 
-<% if current_user %>
+    <% if current_user %>
+        <h4>Give a rating:</h4>
 
-  <h4>Give a rating:</h4>
-
-  <%= form_for(@rating) do |f| %>
-    <%= f.hidden_field :beer_id %>
-    Score <%= f.number_field :score %>
-    <%= f.submit %>
-  <% end %>
-
+        <%= form_for(@rating) do |f| %>
+            <%= f.hidden_field :beer_id %>
+            Score <%= f.number_field :score %>
+            <%= f.submit %>
+        <% end %>
+    <% end %>
 <% end %>
 
 <% if ensure_that_admin %>

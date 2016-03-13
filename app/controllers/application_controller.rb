@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
     helper_method :current_user
     helper_method :ensure_that_admin
+    helper_method :sort_column, :sort_direction
 
     def current_user
         return nil if session[:user_id].nil?
@@ -17,5 +18,13 @@ class ApplicationController < ActionController::Base
 
     def ensure_that_admin
         current_user and current_user.admin
+    end
+
+    def sort_column(acceptable_columns, default)
+        acceptable_columns.include?(params[:sort]) ? params[:sort] : default
+    end
+
+    def sort_direction
+       %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

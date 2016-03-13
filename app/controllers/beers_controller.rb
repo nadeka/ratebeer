@@ -2,17 +2,11 @@ class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
   before_action :ensure_that_logged_in, :ensure_that_admin, except: [:index, :show]
-  before_action :expire_beerlist, only: [:create, :edit, :update, :destroy]
-  before_action :skip_if_cached, only: [:index]
-
-  $sort_options = {'name_asc' => 'name ASC', 'name_desc' => 'name DESC',
-                   'style_asc' => 'styles.name ASC', 'style_desc' => 'styles.name DESC',
-                   'brewery_asc' => 'breweries.name ASC', 'brewery_desc' => 'breweries.name DESC'}
 
   # GET /beers
   # GET /beers.json
   def index
-      @beers = Beer.includes(:style, :brewery).order($sort_options[@order] || 'name ASC')
+    @beers = Beer.includes(:style, :brewery).order(sort_column(["name", "styles.name", "breweries.name"], "name") + " " + sort_direction)
   end
 
   # GET /beers/1
@@ -80,17 +74,7 @@ class BeersController < ApplicationController
     def set_breweries_and_styles_for_template
         @breweries = Brewery.all
         @styles = Style.all
-     end
-
-     def expire_beerlist
-        $sort_options.keys.each { |order| expire_fragment("beerlist-#{order}")  }
-     end
-
-     def skip_if_cached
-         @order = params[:order] || 'name_asc'
-
-         return render :index if fragment_exist?("beerlist-#{@order}") and request.format.html?
-     end
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_params
